@@ -1,0 +1,5 @@
+pandas
+elasticsearch
+requests
+python-dotenv
+streamlit

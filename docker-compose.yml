@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    environment:
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - DEEPSEEK_API_URL=${DEEPSEEK_API_URL}
+    volumes:
+      - ./app:/app # Map the local `app/` directory to `/app` in the container
+      - ./data:/app/data # Map the local `data/` directory to `/app/data` in the container
+
+  streamlit:
+    build: .
+    command: streamlit run /app/streamlit_app.py # Use the correct path to `streamlit_app.py`
+    ports:
+      - "8501:8501"
+    environment:
+      - ELASTICSEARCH_URL=${ELASTICSEARCH_URL}
+      - ELASTICSEARCH_USERNAME=${ELASTICSEARCH_USERNAME}
+      - ELASTICSEARCH_PASSWORD=${ELASTICSEARCH_PASSWORD}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+      - DEEPSEEK_API_URL=${DEEPSEEK_API_URL}
+    volumes:
+      - ./app:/app # Map the local `app/` directory to `/app` in the container
+      - ./data:/app/data # Map the local `data/` directory to `/app/data` in the container
